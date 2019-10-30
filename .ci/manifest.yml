@@ -1,0 +1,11 @@
+---
+applications:
+- name: duckling
+  memory: 128M
+  disk_quota: 128M
+  command: ./duckling-example-exe -p $PORT
+  instances: 1
+  buildpacks:
+  - binary_buildpack
+  routes:
+  - route: duckling.sero.network

@@ -1,0 +1,131 @@
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: v1.4.2
+
+resources:
+- name: cf-duckling
+  type: cf
+  icon: cloud-upload
+  source:
+    api: ((cf.api))
+    username: ((cf.username))
+    password: ((cf.password))
+    organization: ((cf.org))
+    space: ((cf.space))
+    skip_cert_check: false
+
+- name: github-seronet
+  type: git
+  icon: github-face
+  source:
+    uri: git@github.com:seronet-project/duckling.git
+    branch: master
+    depth: 5
+    disable_ci_skip: false
+    private_key: ((github-private-key))
+
+- name: github-facebook
+  type: git
+  icon: github-face
+  source:
+    uri: https://github.com/facebook/duckling.git
+    branch: master
+    depth: 30
+
+- name: notify
+  type: slack-notification
+  icon: chat-alert
+  source:
+    url: ((slack-webhook))
+
+- name: merge-timer
+  type: time
+  source:
+    start: 3:30 AM
+    stop: 4:30 AM
+    location: Europe/Berlin
+
+jobs:
+- name: merge-duckling
+  public: false
+  serial_groups: ["duckling"]
+  plan:
+  - get: merge-timer
+    trigger: true
+  - get: github-facebook
+#    trigger: true
+  - get: github-seronet
+  - task: merge-duckling-master
+    config:
+      platform: linux
+      inputs:
+      - name: github-seronet
+      outputs:
+      - name: github-seronet
+      image_resource:
+        type: docker-image
+        source:
+          repository: cloudfoundry/cflinuxfs3
+      run:
+        path: bash
+        args:
+        - -exc
+        - |
+          cd github-seronet
+          git config user.email "concourse@sero.network"
+          git config user.name "SeRoNet Concourse"
+          git remote add facebook https://github.com/facebook/duckling.git
+          git fetch facebook master
+          git merge --no-edit facebook/master
+  - put: github-seronet
+    params:
+      repository: github-seronet
+
+
+- name : deploy-duckling
+  serial_groups: ["duckling"]
+  plan:
+    - get: github-seronet
+      trigger: true
+    - task: duckling-compile
+      config:
+        platform: linux
+        inputs:
+          - name: github-seronet
+        outputs:
+          - name: duckling-build
+ #       cache:
+ #         - path: 
+        image_resource:
+          type: docker-image
+          source:
+            repository: haskell
+            tag: latest
+        run:
+          user: root
+          path: sh
+          args:
+          - -exc
+          - |
+            cd github-seronet
+            .ci/build.sh
+            cp .ci/manifest.yml ../duckling-build/manifest.yml
+            cd ../duckling-build
+            ls
+    - put: cf-duckling
+      params:
+        path: duckling-build
+        manifest: duckling-build/manifest.yml
+        environment_variables:
+          OAUTH2_ENABLED: "true"
+      on_success:
+        put: notify
+        params:
+          text: "Duckling deployed to ((cf.space)) in ((cf.org))."
+      on_failure:
+        put: notify
+        params:
+          text: "Duckling deployment to ((cf.space)) in ((cf.org)) failed." 
