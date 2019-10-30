@@ -106,7 +106,18 @@ jobs:
             tag: latest
         run:
           user: root
-          path: github-seronet/.ci/build.sh
+          path: sh
+          args:
+          - -exc
+          - |
+            apt-get update
+            apt-get install libpcre3-dev -y
+            cd ./github-seronet
+            stack build --install-ghc
+            stack install --copy-bins --local-bin-path ../duckling-build
+            cd -
+            cp ./github-seronet/.ci/manifest.yml ./duckling-build/manifest.yml
+            ls ./duckling-build
     - put: cf-duckling
       params:
         path: duckling-build
