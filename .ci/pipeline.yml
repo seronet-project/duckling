@@ -97,8 +97,8 @@ jobs:
           - name: github-seronet
         outputs:
           - name: duckling-build
- #       cache:
- #         - path: 
+        caches:
+          - path: github-seronet/.stack-work
         image_resource:
           type: docker-image
           source:
