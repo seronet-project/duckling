@@ -106,15 +106,8 @@ jobs:
             tag: latest
         run:
           user: root
-          path: sh
-          args:
-          - -exc
-          - |
-            cd github-seronet
-            .ci/build.sh
-            cp .ci/manifest.yml ../duckling-build/manifest.yml
-            cd ../duckling-build
-            ls
+          run:
+            path: github-seronet/.ci/build.sh
     - put: cf-duckling
       params:
         path: duckling-build
