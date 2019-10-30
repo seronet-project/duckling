@@ -106,8 +106,7 @@ jobs:
             tag: latest
         run:
           user: root
-          run:
-            path: github-seronet/.ci/build.sh
+          path: github-seronet/.ci/build.sh
     - put: cf-duckling
       params:
         path: duckling-build
