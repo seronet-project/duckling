@@ -601,6 +601,7 @@ allExamples = concat
              ]
   , examples (datetime (2013, 2, 12, 20, 0, 0) Hour)
              [ "8 tonight"
+             , "tonight at 8 o'clock"
              , "eight tonight"
              , "8 this evening"
              , "at 8 in the evening"
@@ -742,6 +743,12 @@ allExamples = concat
              ]
   , examples (datetime (2012, 11, 12, 0, 0, 0) Day)
              [ "three months ago"
+             ]
+  , examples (datetime (2013, 02, 04, 0, 0, 0) Day)
+             [ "the first Monday of this month"
+             , "the first Monday of the month"
+             , "the first Monday in this month"
+             , "first Monday in the month"
              ]
   , examples (datetime (2011, 2, 1, 0, 0, 0) Month)
              [ "two years ago"
