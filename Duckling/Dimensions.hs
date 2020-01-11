@@ -21,6 +21,7 @@ import Duckling.Dimensions.Types
 import Duckling.Locale
 import Duckling.Types
 import qualified Duckling.Dimensions.Common as CommonDimensions
+import qualified Duckling.Dimensions.AF as AFDimensions
 import qualified Duckling.Dimensions.AR as ARDimensions
 import qualified Duckling.Dimensions.BG as BGDimensions
 import qualified Duckling.Dimensions.BN as BNDimensions
@@ -57,6 +58,7 @@ import qualified Duckling.Dimensions.PL as PLDimensions
 import qualified Duckling.Dimensions.PT as PTDimensions
 import qualified Duckling.Dimensions.RO as RODimensions
 import qualified Duckling.Dimensions.RU as RUDimensions
+import qualified Duckling.Dimensions.SK as SKDimensions
 import qualified Duckling.Dimensions.SV as SVDimensions
 import qualified Duckling.Dimensions.SW as SWDimensions
 import qualified Duckling.Dimensions.TA as TADimensions
@@ -97,6 +99,7 @@ dependents (This Volume) = HashSet.singleton (This Numeral)
 dependents (This (CustomDimension dim)) = dimDependents dim
 
 langDimensions :: Lang -> [Some Dimension]
+langDimensions AF = AFDimensions.allDimensions
 langDimensions AR = ARDimensions.allDimensions
 langDimensions BG = BGDimensions.allDimensions
 langDimensions BN = BNDimensions.allDimensions
@@ -133,6 +136,7 @@ langDimensions PL = PLDimensions.allDimensions
 langDimensions PT = PTDimensions.allDimensions
 langDimensions RO = RODimensions.allDimensions
 langDimensions RU = RUDimensions.allDimensions
+langDimensions SK = SKDimensions.allDimensions
 langDimensions SV = SVDimensions.allDimensions
 langDimensions SW = SWDimensions.allDimensions
 langDimensions TA = TADimensions.allDimensions

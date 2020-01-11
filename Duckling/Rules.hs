@@ -21,6 +21,7 @@ import Duckling.Dimensions
 import Duckling.Dimensions.Types
 import Duckling.Locale
 import Duckling.Types
+import qualified Duckling.Rules.AF as AFRules
 import qualified Duckling.Rules.AR as ARRules
 import qualified Duckling.Rules.Common as CommonRules
 import qualified Duckling.Rules.BG as BGRules
@@ -58,6 +59,7 @@ import qualified Duckling.Rules.PL as PLRules
 import qualified Duckling.Rules.PT as PTRules
 import qualified Duckling.Rules.RO as RORules
 import qualified Duckling.Rules.RU as RURules
+import qualified Duckling.Rules.SK as SKRules
 import qualified Duckling.Rules.SV as SVRules
 import qualified Duckling.Rules.SW as SWRules
 import qualified Duckling.Rules.TA as TARules
@@ -88,6 +90,7 @@ rulesFor' (Locale lang Nothing) dim =
 
 -- | Default rules when no locale, for backward compatibility.
 defaultRules :: Lang -> Some Dimension -> [Rule]
+defaultRules AF = AFRules.defaultRules
 defaultRules AR = ARRules.defaultRules
 defaultRules BG = BGRules.defaultRules
 defaultRules BN = BNRules.defaultRules
@@ -124,6 +127,7 @@ defaultRules PL = PLRules.defaultRules
 defaultRules PT = PTRules.defaultRules
 defaultRules RO = RORules.defaultRules
 defaultRules RU = RURules.defaultRules
+defaultRules SK = SKRules.defaultRules
 defaultRules SV = SVRules.defaultRules
 defaultRules SW = SWRules.defaultRules
 defaultRules TA = TARules.defaultRules
@@ -134,6 +138,7 @@ defaultRules VI = VIRules.defaultRules
 defaultRules ZH = ZHRules.defaultRules
 
 localeRules :: Lang -> Region -> Some Dimension -> [Rule]
+localeRules AF = AFRules.localeRules
 localeRules AR = ARRules.localeRules
 localeRules BG = BGRules.localeRules
 localeRules BN = BNRules.localeRules
@@ -170,6 +175,7 @@ localeRules PL = PLRules.localeRules
 localeRules PT = PTRules.localeRules
 localeRules RO = RORules.localeRules
 localeRules RU = RURules.localeRules
+localeRules SK = SKRules.localeRules
 localeRules SV = SVRules.localeRules
 localeRules SW = SWRules.localeRules
 localeRules TA = TARules.localeRules
@@ -180,6 +186,7 @@ localeRules VI = VIRules.localeRules
 localeRules ZH = ZHRules.localeRules
 
 langRules :: Lang -> Some Dimension -> [Rule]
+langRules AF = AFRules.langRules
 langRules AR = ARRules.langRules
 langRules BG = BGRules.langRules
 langRules BN = BNRules.langRules
@@ -216,6 +223,7 @@ langRules PL = PLRules.langRules
 langRules PT = PTRules.langRules
 langRules RO = RORules.langRules
 langRules RU = RURules.langRules
+langRules SK = SKRules.langRules
 langRules SV = SVRules.langRules
 langRules SW = SWRules.langRules
 langRules TA = TARules.langRules

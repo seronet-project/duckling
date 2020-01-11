@@ -5,7 +5,7 @@
 -- LICENSE file in the root directory of this source tree.
 
 
-module Duckling.Dimensions.BG
+module Duckling.Dimensions.AF
   ( allDimensions
   ) where
 
@@ -13,9 +13,5 @@ import Duckling.Dimensions.Types
 
 allDimensions :: [Some Dimension]
 allDimensions =
-  [ This Distance
-  , This Duration
-  , This Numeral
-  , This Ordinal
-  , This Time
+  [ This Numeral
   ]

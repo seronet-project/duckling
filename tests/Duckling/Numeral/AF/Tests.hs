@@ -4,18 +4,19 @@
 -- This source code is licensed under the BSD-style license found in the
 -- LICENSE file in the root directory of this source tree.
 
-
-module Duckling.Dimensions.BG
-  ( allDimensions
+module Duckling.Numeral.AF.Tests
+  ( tests
   ) where
 
-import Duckling.Dimensions.Types
+import Data.String
+import Prelude
+import Test.Tasty
 
-allDimensions :: [Some Dimension]
-allDimensions =
-  [ This Distance
-  , This Duration
-  , This Numeral
-  , This Ordinal
-  , This Time
+import Duckling.Dimensions.Types
+import Duckling.Numeral.AF.Corpus
+import Duckling.Testing.Asserts
+
+tests :: TestTree
+tests = testGroup "AF Tests"
+  [ makeCorpusTest [This Numeral] corpus
   ]
