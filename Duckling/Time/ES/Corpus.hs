@@ -174,6 +174,7 @@ allExamples = concat
   , examples (datetime (2013, 2, 18, 0, 0, 0) Week)
              [ "la semana que viene"
              , "la proxima semana"
+             , "semana que viene"
              ]
   , examples (datetime (2013, 1, 1, 0, 0, 0) Month)
              [ "el pasado mes"
@@ -218,6 +219,8 @@ allExamples = concat
   , examples (datetime (2013, 2, 12, 12, 0, 0) Hour)
              [ "mediodía"
              , "las doce"
+             , "medio dia"
+             , "medio día"
              ]
   , examples (datetime (2013, 2, 12, 12, 15, 0) Minute)
              [ "las doce y cuarto"
@@ -453,7 +456,13 @@ allExamples = concat
              , "día de las bromas"
              ]
   , examples (datetime (2013, 3, 9, 0, 0, 0) Day)
-             [ "el día nueve"
+             [ "día nueve"
+             ]
+  , examples (datetime (2013, 2, 15, 0, 0, 0) Day)
+             [ "día quince"
+             ]
+  , examples (datetime (2013, 3, 11, 0, 0, 0) Day)
+             [ "día once"
              ]
   , examples (datetime (2013, 2, 12, 18, 2, 0) Minute)
              [

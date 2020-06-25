@@ -281,7 +281,7 @@ ruleNoon :: Rule
 ruleNoon = Rule
   { name = "noon"
   , pattern =
-    [ regex "mediod(í|i)a"
+    [ regex "medio(\\s*)d(í|i)a"
     ]
   , prod = \_ -> tt $ hour False 12
   }
@@ -1266,6 +1266,17 @@ ruleTimezone = Rule
       _ -> Nothing
   }
 
+ruleNextWeek :: Rule
+ruleNextWeek = Rule
+  {
+    name = "next week"
+  , pattern =
+    [ Predicate $ isGrain TG.Week
+    , regex "que viene"
+    ]
+  , prod = \_ -> tt $ cycleNth TG.Week 1
+  }
+
 rulePeriodicHolidays :: [Rule]
 rulePeriodicHolidays = mkRuleHolidays
   -- Fixed dates, year over year
@@ -1471,14 +1482,13 @@ rulePeriodicHolidays = mkRuleHolidays
 
 ruleElDayofmonthNonOrdinalWithDia :: Rule
 ruleElDayofmonthNonOrdinalWithDia = Rule
-  { name = "el dia <day-of-month> (non ordinal)"
+  { name = "dia <day-of-month> (non ordinal)"
   , pattern =
-    [ regex "el"
-    , regex "día"
+    [ regex "día"
     , Predicate $ isIntegerBetween 1 31
     ]
   , prod = \tokens -> case tokens of
-      (_:_:token:_) -> do
+      (_:token:_) -> do
         v <- getIntValue token
         tt $ dayOfMonth v
       _ -> Nothing
@@ -1576,6 +1586,7 @@ rules =
   , ruleHourofdayMinusIntegerAsRelativeMinutes2
   , ruleTimezone
   , ruleElDayofmonthNonOrdinalWithDia
+  , ruleNextWeek
   ]
   ++ ruleDaysOfWeek
   ++ ruleMonths
