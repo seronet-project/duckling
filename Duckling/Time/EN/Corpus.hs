@@ -1845,6 +1845,10 @@ allExamples = concat
   , examples (datetimeHoliday (2011, 12, 25, 0, 0, 0) Day "Christmas")
             [ "the 3rd closest xmas to today"
             ]
+  , examples (datetime (2013, 10, 25, 0, 0, 0) Day)
+            [ "last friday of october"
+            , "last friday in october"
+            ]
   , examples (datetime (2013, 2, 25, 0, 0, 0) Week)
             [ "upcoming two weeks"
             , "upcoming two week"
@@ -1895,4 +1899,7 @@ allExamples = concat
             , "2 upcoming years"
             , "2 upcoming year"
             ]
+  , examples (datetime (2013, 2, 13, 13, 40, 0) Minute)
+             [ "20 minutes to 2pm tomorrow"
+             ]
   ]

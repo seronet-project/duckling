@@ -8,6 +8,7 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE NoRebindableSyntax #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE LambdaCase #-}
 
 module Duckling.Time.ES.Rules
   ( rules
@@ -688,6 +689,28 @@ ruleDimTimeDeLaTarde = Rule
       _ -> Nothing
   }
 
+ruleDimTimeDeLaTarde2 :: Rule
+ruleDimTimeDeLaTarde2 = Rule
+  { name = "<time-of-day> de la tarde"
+  , pattern =
+    [ Predicate isAnHourOfDay
+    , Predicate $ isIntegerBetween 1 59
+    , regex "(a|en|de) la tarde"
+    ]
+  , prod = \case
+      (Token Time TimeData {
+          TTime.form = Just (TTime.TimeOfDay (Just hours) is12H)
+        }:
+        minutesToken:
+       _:
+       _) -> do
+         minutes <- getIntValue minutesToken
+         let td = hourMinute is12H hours minutes
+         tarde <- interval TTime.Open (hour False 12) (hour False 21)
+         Token Time <$> intersect td (mkLatent $ partOfDay tarde)
+      _ -> Nothing
+  }
+
 ruleIntegerInThePartofday :: Rule
 ruleIntegerInThePartofday = Rule
   { name = "<integer> in the <part-of-day>"
@@ -929,8 +952,10 @@ ruleALasHourmintimeofday = Rule
     , Predicate isATimeOfDay
     , regex "horas?"
     ]
-  , prod = \tokens -> case tokens of
-      (_:x:_) -> Just x
+  , prod = \case
+      ( _:
+        x:
+        _) -> Just x
       _ -> Nothing
   }
 
@@ -1131,7 +1156,7 @@ ruleALasTimeofday :: Rule
 ruleALasTimeofday = Rule
   { name = "a las <time-of-day>"
   , pattern =
-    [ regex "(al?)( las?)?|las?"
+    [ regex "((para)|(al?))( las?)?|las?"
     , Predicate isATimeOfDay
     ]
   , prod = \tokens -> case tokens of
@@ -1514,6 +1539,7 @@ rules =
   , ruleDentroDeDuration
   , ruleDimTimeDeLaManana
   , ruleDimTimeDeLaTarde
+  , ruleDimTimeDeLaTarde2
   , ruleElCycleAntesTime
   , ruleElCycleProximoqueViene
   , ruleElCycleProximoqueVieneTime
