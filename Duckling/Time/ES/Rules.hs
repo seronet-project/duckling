@@ -1519,6 +1519,39 @@ ruleElDayofmonthNonOrdinalWithDia = Rule
       _ -> Nothing
   }
 
+ruleNextWeekAlt :: Rule
+ruleNextWeekAlt = Rule
+  {
+    name = "next week (alt)"
+  , pattern =
+    [
+      regex "pr(ó|o)xim(o|a)s?|siguientes?"
+    , Predicate $ isGrain TG.Week
+    ]
+  , prod = \_ -> tt $ cycleNth TG.Week 1
+  }
+
+ruleYearByAddingThreeNumbers :: Rule
+ruleYearByAddingThreeNumbers = Rule
+  { name    = "year (value by adding three composing numbers together)"
+  , pattern =
+    [
+      regex "mil"
+    , Predicate $ isIntegerBetween 100 1000
+    , Predicate $ isIntegerBetween 1 100
+    ]
+  , prod    = \case
+      (
+        _:
+        t1:
+        t2:
+        _) -> do
+          v1 <- getIntValue t1
+          v2 <- getIntValue t2
+          tt $ year $ 1000 + v1 + v2
+      _ -> Nothing
+  }
+
 rules :: [Rule]
 rules =
   [ ruleALasHourmintimeofday
@@ -1613,6 +1646,8 @@ rules =
   , ruleTimezone
   , ruleElDayofmonthNonOrdinalWithDia
   , ruleNextWeek
+  , ruleNextWeekAlt
+  , ruleYearByAddingThreeNumbers
   ]
   ++ ruleDaysOfWeek
   ++ ruleMonths

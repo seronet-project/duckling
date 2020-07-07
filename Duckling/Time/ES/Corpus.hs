@@ -175,6 +175,10 @@ allExamples = concat
              [ "la semana que viene"
              , "la proxima semana"
              , "semana que viene"
+             , "proxima semana"
+             , "proximas semana"
+             , "próxima semana"
+             , "siguiente semana"
              ]
   , examples (datetime (2013, 1, 1, 0, 0, 0) Month)
              [ "el pasado mes"
@@ -480,5 +484,13 @@ allExamples = concat
              ]
   , examples (datetime (2013, 2, 12, 18, 2, 0) Minute)
              [ "seis dos de la tarde"
+             ]
+  , examples (datetime (1990, 0, 0, 0, 0, 0) Year)
+             [
+               "mil novecientos noventa"
+             ]
+  , examples (datetime (1990, 5, 4, 0, 0, 0) Day)
+             [
+               "cuatro de mayo de mil novecientos noventa"
              ]
   ]
