@@ -89,6 +89,7 @@ library
                      , Duckling.Rules.SV
                      , Duckling.Rules.SW
                      , Duckling.Rules.TA
+                     , Duckling.Rules.TE
                      , Duckling.Rules.TH
                      , Duckling.Rules.TR
                      , Duckling.Rules.UK
@@ -148,6 +149,7 @@ library
                      , Duckling.Ranking.Classifiers.SV_XX
                      , Duckling.Ranking.Classifiers.SW_XX
                      , Duckling.Ranking.Classifiers.TA_XX
+                     , Duckling.Ranking.Classifiers.TE_XX
                      , Duckling.Ranking.Classifiers.TH_XX
                      , Duckling.Ranking.Classifiers.TR_XX
                      , Duckling.Ranking.Classifiers.UK_XX
@@ -205,6 +207,7 @@ library
                      , Duckling.Dimensions.SV
                      , Duckling.Dimensions.SW
                      , Duckling.Dimensions.TA
+                     , Duckling.Dimensions.TE
                      , Duckling.Dimensions.TH
                      , Duckling.Dimensions.TR
                      , Duckling.Dimensions.UK
@@ -400,6 +403,9 @@ library
                      , Duckling.Numeral.AR.Corpus
                      , Duckling.Numeral.AR.Helpers
                      , Duckling.Numeral.AR.Rules
+                     , Duckling.Numeral.AR.EG.Corpus
+                     , Duckling.Numeral.AR.EG.Helpers
+                     , Duckling.Numeral.AR.EG.Rules
                      , Duckling.Numeral.BG.Corpus
                      , Duckling.Numeral.BG.Rules
                      , Duckling.Numeral.BN.Corpus
@@ -494,6 +500,8 @@ library
                      , Duckling.Numeral.SW.Rules
                      , Duckling.Numeral.TA.Corpus
                      , Duckling.Numeral.TA.Rules
+                     , Duckling.Numeral.TE.Corpus
+                     , Duckling.Numeral.TE.Rules
                      , Duckling.Numeral.TH.Corpus
                      , Duckling.Numeral.TH.Rules
                      , Duckling.Numeral.TR.Corpus
@@ -1001,6 +1009,7 @@ test-suite duckling-test
                      , Duckling.Numeral.SV.Tests
                      , Duckling.Numeral.SW.Tests
                      , Duckling.Numeral.TA.Tests
+                     , Duckling.Numeral.TE.Tests
                      , Duckling.Numeral.TH.Tests
                      , Duckling.Numeral.TR.Tests
                      , Duckling.Numeral.UK.Tests
