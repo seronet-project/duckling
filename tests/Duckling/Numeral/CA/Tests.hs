@@ -4,17 +4,18 @@
 -- This source code is licensed under the BSD-style license found in the
 -- LICENSE file in the root directory of this source tree.
 
-module Duckling.Time.TR.Tests
+
+module Duckling.Numeral.CA.Tests
   ( tests ) where
 
 import Data.String
 import Test.Tasty
 
 import Duckling.Dimensions.Types
+import Duckling.Numeral.CA.Corpus
 import Duckling.Testing.Asserts
-import Duckling.Time.TR.Corpus
 
 tests :: TestTree
-tests = testGroup "TR Tests"
-  [ makeCorpusTest [Seal Time] corpus
+tests = testGroup "CA Tests"
+  [ makeCorpusTest [Seal Numeral] corpus
   ]
