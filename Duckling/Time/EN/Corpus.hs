@@ -112,6 +112,7 @@ negativeCorpus = (testContext, testOptions, examples)
       , "A4 A5"
       , "palm"
       , "Martin Luther King' day"
+      , "two three"
       ]
 
 latentCorpus :: Corpus
@@ -165,6 +166,9 @@ latentCorpus = (testContext, testOptions {withLatent = True}, xs)
              ]
       , examples (datetimeInterval ((1960, 1, 1, 0, 0, 0), (1962, 1, 1, 0, 0, 0)) Year)
              [ "1960 - 1961"
+             ]
+      , examples (datetime (2013, 2, 12, 20, 15, 0) Minute)
+             [  "tonight 815"
              ]
       ]
 

@@ -621,8 +621,22 @@ rulePODatTOD = Rule
         Token Time tod@TimeData{TTime.form = Just (TTime.TimeOfDay (Just hours) True)}:_) ->
         tt $ timeOfDayAMPM (start < 12 || hours == 12) tod
       _ -> Nothing
-
   }
+
+rulePODintersectTODlatent :: Rule
+rulePODintersectTODlatent = Rule
+  { name = "<part-of-day> <latent-time-of-day> (latent)"
+  , pattern =
+    [ Predicate isAPartOfDay
+    , Predicate isATimeOfDay
+    ]
+  , prod = \tokens -> case tokens of
+      (Token Time td1:Token Time td2:_)
+        | not (TTime.latent td1) || TTime.latent td2 ->
+        Token Time . mkLatent <$> intersect td1 td2
+      _ -> Nothing
+  }
+
 
 ruleHHMM :: Rule
 ruleHHMM = Rule
@@ -752,7 +766,7 @@ ruleHONumeral = Rule
   { name = "<hour-of-day> <integer>"
   , pattern =
     [ Predicate isAnHourOfDay
-    , Predicate $ isIntegerBetween 1 59
+    , Predicate $ isIntegerBetween 10 59
     ]
   , prod = \tokens -> case tokens of
       (Token Time TimeData{TTime.form = Just (TTime.TimeOfDay (Just hours) is12H)
@@ -2705,6 +2719,7 @@ rules =
   , ruleAtTOD
   , ruleTODOClock
   , rulePODatTOD
+  , rulePODintersectTODlatent
   , ruleHHMM
   , ruleHHhMM
   , ruleHHMMLatent
